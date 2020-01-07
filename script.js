@@ -9,8 +9,11 @@ function chooseYourSize(n) {
             const box = document.createElement('div');
             box.classList.add('box');
             box.style.border = "1px solid";
-            box.addEventListener("mousedown", function(){
-                box.style.background = "black";
+            box.addEventListener("mouseover", function(){
+                if(mouseDown){
+                    box.style.background = "black";
+                  }
+                
             });
             container.appendChild(box);
         }
@@ -18,5 +21,13 @@ function chooseYourSize(n) {
     container.style.gridTemplateColumns = "repeat(" + n + ", 1fr)";
     container.style.gridTemplateRows = "repeat(" + n + ", 1fr)";
     
+}
+
+var mouseDown = 0;
+document.body.onmousedown = function() { 
+  ++mouseDown;
+}
+document.body.onmouseup = function() {
+  --mouseDown;
 }
 chooseYourSize(numOfBoxes);
