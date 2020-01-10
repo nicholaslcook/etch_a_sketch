@@ -6,12 +6,25 @@ let numOfBoxes = 40;
 function chooseYourSize(n) {
     for (let i = 0; i < n; i++) {
         for (let z = 0; z < n; z++) {
-            const box = document.createElement('div');
-            box.classList.add('box');
-            box.style.border = "1px solid";
-            box.addEventListener("mouseover", function(){
-                    box.style.background = "black";
-            });
+          const box = document.createElement('div');
+          box.classList.add('box');
+          box.classList.add('untouched');
+          box.style.border = "1px solid";
+          box.addEventListener("mouseover", function(){
+            if (box.classList.contains('untouched')) {
+                box.style.background = "rgb(" + Math.floor(Math.random() * 255 )+", " + Math.floor(Math.random() * 255 )+", " + Math.floor(Math.random() * 255 )+")";
+                box.classList.add('darken');
+                box.classList.remove('untouched');
+          } else if (box.classList.contains('darken')) {
+                let r = box.style.backgroundColor.split("(")[1].split(")")[0].split(",")[0];
+                let g = box.style.backgroundColor.split("(")[1].split(")")[0].split(",")[1];
+                let b = box.style.backgroundColor.split("(")[1].split(")")[0].split(",")[2];
+                r -= 20;
+                g -= 20;
+                b -= 20;
+                box.style.background = "rgb(" + r + "," + g + "," + b + ")";
+              }
+          });
             container.appendChild(box);
         }
     }
@@ -36,11 +49,4 @@ clearBut.addEventListener("click", function(){
     chooseYourSize(numOfBoxes);
 });
 
-var mouseDown = 0;
-document.body.onmousedown = function() { 
-  ++mouseDown;
-}
-document.body.onmouseup = function() {
-  --mouseDown;
-}
 chooseYourSize(numOfBoxes);
